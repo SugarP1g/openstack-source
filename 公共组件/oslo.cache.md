@@ -1,4 +1,5 @@
-作者：Bill_Xiang_
+作者：Bill\_Xiang\_
+
 原文：https://blog.csdn.net/bill_xiang_/article/details/78701612
 
 在OpenStack中除了使用数据库对云平台所产生的数据进行持久化外，还需要对一些常用的数据或状态进行缓存。而oslo.cache便通过dogpile.cache库实现了一个缓存机制为OpenStack其他组件提供缓存。目前，oslo.cache支持多种缓存机制，包括Memcache、etcd 3.x、MongoDB、dictionary等。本文将详细介绍oslo.cache提供的缓存机制与常用的使用方法。
