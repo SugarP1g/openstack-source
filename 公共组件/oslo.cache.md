@@ -6,7 +6,7 @@
 
 在 OpenStack 中除了使用数据库对云平台所产生的数据进行持久化外，还需要对一些常用的数据或状态进行缓存。而 oslo.cache 便通过 dogpile.cache 库实现了一个缓存机制为 OpenStack 其他组件提供缓存。目前，oslo.cache 支持多种缓存机制，包括 Memcache、etcd 3.x、MongoDB、dictionary 等。本文将详细介绍 oslo.cache 提供的缓存机制与常用的使用方法。
 
-## 1. dogpile.cache库
+## 1. dogpile.cache 库
 
 dogpile.cache 是一个缓存API，它为各种类型的缓存后端提供了一个通用的接口；另外，它还提供了API钩子，可以将这些不同的缓存后端与dogpile库提供的锁机制结合使用。由于本文重点介绍 oslo.cache，所以不对 dogpile.cache 库做深入展开，有兴趣的同学可以参考 dogpile.cache 文档。本文只对 dogpile.cache 中提供的通用接口进行介绍。
 
@@ -28,7 +28,7 @@ dogpile.cache 是一个缓存API，它为各种类型的缓存后端提供了一
 - delete(key)：从缓存中删除一个值。
 - delete_multi(keys)：从缓存中删除多个值。
 
-## 2. oslo.cache支持的后端缓存机制
+## 2. oslo.cache 支持的后端缓存机制
 
 目前，oslo.cache 实现了四种后端缓存机制的支持，包括 Memcache、etcd 3.x、MongoDB、dictionary 等。这些实现都保存在 oslo_cache/backend 目录下。
 
@@ -41,7 +41,7 @@ dogpile.cache 是一个缓存API，它为各种类型的缓存后端提供了一
 
 oslo.cache 除了支持自身实现的四种缓存机制外，还支持 dogpile.cache 库本身实现的各类缓存机制，包括 Redis、dbm、memory、pylibmc 等。
 
-## 3. oslo.cache缓存机制的实现
+## 3. oslo.cache 缓存机制的实现
 
 oslo.cache 缓存机制的核心实现都定义在 oslo_cache.core 模块中，而缓存机制的实现主要依赖于以下几个方法：
 
@@ -49,7 +49,8 @@ oslo.cache 缓存机制的核心实现都定义在 oslo_cache.core 模块中，�
 - `configure_cache_region(conf, region)`：该方法通过配置文件中缓存的相关配置以及 CacheRegion 对象提供的配置方法配置缓存区。
 - `get_memoization_decorator(conf, region, group, expiration_group=None)`：这是一个根据 CacheRegion 对象中 cache_on_arguments() 装饰器定义的 oslo.cache 的一个装饰器，其会根据 group 或 expiration_group 确定是否允许缓存以及缓存的时间。而 CacheRegion 对象中的 cache_on_arguments() 方法则提供了对一个或多个值的缓存、获取等操作方法。
 
-## 4. oslo.cache的使用
+## 4. oslo.cache 的使用
+
 oslo.cache 的使用方式也非常简单，首先在使用 oslo.cache 时需要在对应 OpenStack 服务中添加相关的配置信息。这些配置信息包括是否允许使用缓存 enabled 、后端缓存机制 backend 以及缓存的保存时间 cache_time 等。
 
 ```
