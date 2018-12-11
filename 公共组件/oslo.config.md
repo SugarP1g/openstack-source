@@ -6,7 +6,7 @@
 
 随着 OpenStack 项目的不断发展与完善， OpenStack 社区将所有组件中的具有共性的组件剥离出来，并统一放在 oslo 组件下。 oslo 中的组件不仅可以在 OpenStack 项目中使用，也可以单独作为第三方工具包供其他项目使用。 oslo.config 项目是 oslo 组件中用于 OpenStack 配置文件的一个项目。本文首先以 Nova 项目为例，介绍了 oslo.config 的用法；然后，根据源码详细分析了其实现原理。
 
-## 1. oslo.config用法
+## 1. oslo.config 用法
 
 ### 1.1 定义配置项
 
