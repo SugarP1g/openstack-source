@@ -124,7 +124,7 @@ nova 通过导入 nova.conf 模块，此时会调用 nova.conf 的 \_\_init\_\_.
 
 要使用 oslo.config 最重要的便是 ConfigOpts 类，所以本文首先介绍 ConfigOpts 类。 ConfigOpts 类是一个用来提供注册配置组和配置项的配置项管理类，其中包含几个重要的属性：
 
-- \- _opts 表示所有的配置项
+- \_opts 表示所有的配置项
 - \_cli\_opts 表示所有的命令行配置项
 - \_groups 表示所有的配置组
 - \_namespace 表示各服务的命名空间；
