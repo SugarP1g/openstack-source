@@ -41,7 +41,7 @@ dogpile.cache 是一个缓存API，它为各种类型的缓存后端提供了一
 
 oslo.cache 除了支持自身实现的四种缓存机制外，还支持 dogpile.cache 库本身实现的各类缓存机制，包括 Redis、dbm、memory、pylibmc 等。
 
-# 3. oslo.cache缓存机制的实现
+## 3. oslo.cache缓存机制的实现
 
 oslo.cache 缓存机制的核心实现都定义在 oslo_cache.core 模块中，而缓存机制的实现主要依赖于以下几个方法：
 
