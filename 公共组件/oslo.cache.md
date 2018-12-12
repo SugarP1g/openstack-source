@@ -19,23 +19,23 @@ dogpile.cache 是一个缓存API，它为各种类型的缓存后端提供了一
 
 **CacheBackend 类**是 dogpile.cache 为不同缓存后端提供的一个通用的缓存接口，该接口为不同类型的缓存后端，如 Memcache 等提供了统一的接口，程序员在使用时只需要为该类添加实现即可实现读写缓存等操作。该接口主要提供了一下几个属性和方法：
 
-- key_mangler 属性：表示一个 key 的压缩函数，可能是空，也可能声明为一个普通的实例方法。
-- set(key, value)：缓存一个值，key 表示这个值的关键字，value 代表一个具体的 CacheValue 对象。
-- set_multi(mapping)：缓存多个值，mapping 是一个字典类型的值。
-- get(key)：从缓存中获取一个值，返回一个 CacheValue 对象，如果指定的 key 找不到对应的值，则返回一个 NoValue 类型的对象，表示空。
-- get_multi(keys)：从缓存中获取多个值。
-- get_mutex(key)：为给定的键返回一个可选的互斥锁对象，该对象需要提供两个方法：加锁 acquire() 和释放锁 release() 。
-- delete(key)：从缓存中删除一个值。
-- delete_multi(keys)：从缓存中删除多个值。
+- key_mangler ：表示一个 key 的压缩函数，可能是空，也可能声明为一个普通的实例方法。
+- set(key, value) ：缓存一个值，key 表示这个值的关键字，value 代表一个具体的 CacheValue 对象。
+- set_multi(mapping) ：缓存多个值，mapping 是一个字典类型的值。
+- get(key) ：从缓存中获取一个值，返回一个 CacheValue 对象，如果指定的 key 找不到对应的值，则返回一个 NoValue 类型的对象，表示空。
+- get_multi(keys) ：从缓存中获取多个值。
+- get_mutex(key) ：为给定的键返回一个可选的互斥锁对象，该对象需要提供两个方法：加锁 acquire() 和释放锁 release() 。
+- delete(key) ：从缓存中删除一个值。
+- delete_multi(keys) ：从缓存中删除多个值。
 
 ## 2. oslo.cache 支持的后端缓存机制
 
 目前，oslo.cache 实现了四种后端缓存机制的支持，包括 Memcache、etcd 3.x、MongoDB、dictionary 等。这些实现都保存在 oslo_cache/backend 目录下。
 
-- oslo.cache.backend.memcache_pool：该模块提供了 Memcache 缓存池支持，首先实现了 Memcache 缓存连接池 ConnectionPool ，然后实现了 PooledMemcachedBackend 类对 Memcache 缓存连接池进行读写等操作。
-- oslo_cache.backend.etcd3gw：该模块提供了 etcd 3.x 版本的缓存操作，实现了 Etcd3gwCacheBackend类。
-- oslo_cache.backend.mongo：该模块通过 MongoCacheBackend 类实现了使用 MongoDB 进行缓存的操作。
-- oslo_cache.backed.dictionary：该模块 DictCacheBackend 类实现了通过字典进行缓存的操作机制。
+- oslo.cache.backend.memcache_pool ：该模块提供了 Memcache 缓存池支持，首先实现了 Memcache 缓存连接池 ConnectionPool ，然后实现了 PooledMemcachedBackend 类对 Memcache 缓存连接池进行读写等操作。
+- oslo_cache.backend.etcd3gw ：该模块提供了 etcd 3.x 版本的缓存操作，实现了 Etcd3gwCacheBackend类。
+- oslo_cache.backend.mongo ：该模块通过 MongoCacheBackend 类实现了使用 MongoDB 进行缓存的操作。
+- oslo_cache.backed.dictionary ：该模块 DictCacheBackend 类实现了通过字典进行缓存的操作机制。
 
 上述这些实现缓存的类，包括 PooledMemcachedBackend、Etcd3gwCacheBackend、MongoCacheBackend、DictCacheBackend ，都是 dogpile.cache 中 CacheBackend 类的实现。其通过具体的后端缓存机制实现了对缓存的增删查等操作。
 
@@ -45,9 +45,9 @@ oslo.cache 除了支持自身实现的四种缓存机制外，还支持 dogpile.
 
 oslo.cache 缓存机制的核心实现都定义在 oslo_cache.core 模块中，而缓存机制的实现主要依赖于以下几个方法：
 
-- `create_region(function=function_key_generator)`：创建缓存区，该方法主要调用了 dogpile.cache 模块的 `make_region(function_key_generator=function)` 方法创建了一个 CacheRegion 对象。该对象通过配置文件找到对应的后端缓存实现机制创建缓存区，该对象通过具体的后端缓存机制实现了缓存数据的增删改操作。该方法调用了 oslo.cache 自己定义的 key 键生成方法。
-- `configure_cache_region(conf, region)`：该方法通过配置文件中缓存的相关配置以及 CacheRegion 对象提供的配置方法配置缓存区。
-- `get_memoization_decorator(conf, region, group, expiration_group=None)`：这是一个根据 CacheRegion 对象中 cache_on_arguments() 装饰器定义的 oslo.cache 的一个装饰器，其会根据 group 或 expiration_group 确定是否允许缓存以及缓存的时间。而 CacheRegion 对象中的 cache_on_arguments() 方法则提供了对一个或多个值的缓存、获取等操作方法。
+- `create_region(function=function_key_generator)` ：创建缓存区，该方法主要调用了 dogpile.cache 模块的 `make_region(function_key_generator=function)` 方法创建了一个 CacheRegion 对象。该对象通过配置文件找到对应的后端缓存实现机制创建缓存区，该对象通过具体的后端缓存机制实现了缓存数据的增删改操作。该方法调用了 oslo.cache 自己定义的 key 键生成方法。
+- `configure_cache_region(conf, region)` ：该方法通过配置文件中缓存的相关配置以及 CacheRegion 对象提供的配置方法配置缓存区。
+- `get_memoization_decorator(conf, region, group, expiration_group=None)` ：这是一个根据 CacheRegion 对象中 cache_on_arguments() 装饰器定义的 oslo.cache 的一个装饰器，其会根据 group 或 expiration_group 确定是否允许缓存以及缓存的时间。而 CacheRegion 对象中的 cache_on_arguments() 方法则提供了对一个或多个值的缓存、获取等操作方法。
 
 ## 4. oslo.cache 的使用
 
