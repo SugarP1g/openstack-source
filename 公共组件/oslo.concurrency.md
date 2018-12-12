@@ -38,11 +38,21 @@ lockutils 中也实现了信号量，准确来说是一个信号量垃圾收集�
 
 ### 1.3 同步装饰器
 
-lockutils 中定义了两个同步装饰器方法 synchronized(name, lock_file_prefix=None, external=False, lock_path=None, semaphores=None, delay=0.01) 和 synchronized_with_prefix(lock_file_prefix) 。前者直接使用 @synchronized(name) 对装饰的方法加同步锁；而后者可以通过重新定义使用 @synchronized(name) 对装饰的方法加一个带有前缀的同步锁。
+lockutils 中定义了两个同步装饰器方法：
+
+- synchronized(name, lock_file_prefix=None, external=False, lock_path=None, semaphores=None, delay=0.01)
+- synchronized_with_prefix(lock_file_prefix)
+
+前者直接使用 @synchronized(name) 对装饰的方法加同步锁；而后者可以通过重新定义使用 @synchronized(name) 对装饰的方法加一个带有前缀的同步锁。
 
 ### 1.4 外部锁
 
-lockutils 中也定义了两个方法分别用来获取和删除外部锁： external_lock(name, lock_file_prefix=None, lock_path=None) 和 remove_external_lock_file(name, lock_file_prefix=None, lock_path=None, semaphores=None) 。其需要指定锁文件的前缀、锁文件路径以及锁的名称，通过这些属性， lockutils 可以通过 \_get\_lock\_path(name, lock_file_prefix, lock_path=None) 方法获取锁的位置，并根据锁文件创建和删除一个外部锁。
+lockutils 中也定义了两个方法分别用来获取和删除外部锁：
+
+- external_lock(name, lock_file_prefix=None, lock_path=None)
+- remove_external_lock_file(name, lock_file_prefix=None, lock_path=None, semaphores=None) 。
+
+其需要指定锁文件的前缀、锁文件路径以及锁的名称，通过这些属性， lockutils 可以通过 \_get\_lock\_path(name, lock_file_prefix, lock_path=None) 方法获取锁的位置，并根据锁文件创建和删除一个外部锁。
 
 ## 2 processutils
 
@@ -72,20 +82,20 @@ ProcessLimits 类封装了一个进程对资源的限制，这些限制主要包
 processutils 模块中定义了执行进程的方法等，主要方法包括以下几个：
 
 - execute() 方法：该方法通过启动一个子进程提取并执行一个命令。主要参数有：
-  - 待执行的命令 cmd ；
-  - 设置当前目录的 cwd ；
-  - 发送到打开的进程 process_input ；
-  - 为进程设置环境变量的 env_variables ；
-  - 代表退出进程的 int、bool 或 list 值 check_exit_code ，默认为0，只有产生异常才会设置为其他值；
-  - 重试延迟时间 delay_on_retry ，如果设置为 True ，表示马上进行重试操作；
-  - cmd 重试次数 attempts ；
-  - run_as_root ，该值如果设置为 True ，则为 cmd 命令加上 root_helper 指定的前缀；
-  - 为命令指定的前缀 root_helper ；
-  - shell 表示是否使用 shell 执行这个命令；
-  - 执行命令记录日志的等级 loglevel；
-  - 监听错误日志 log_errors ，是一个 LogErrors 对象；
-  - binary ，该值如果为 True ，则返回 Unicode 编码的 stdout 后 stderr ；
-  - prlimit 表示一个 ProcessLimits 对象，用于限制执行该 cmd 的命令的资源用量。
+  - cmd：待执行的命令；
+  - cwd：设置当前目录；
+  - process_input：发送到打开的进程；
+  - env_variables：进程环境变量；
+  - check_exit_code：代表退出进程的 int、bool 或 list 值，默认为0，只有产生异常才会设置为其他值；
+  - delay_on_retry：重试延迟时间，如果设置为 True ，表示马上进行重试操作；
+  - attempts：cmd 重试次数；
+  - run_as_root：该值如果设置为 True ，则为 cmd 命令加上 root_helper 指定的前缀；
+  - root_helper：为命令指定的前缀；
+  - shell：表示是否使用 shell 执行这个命令；
+  - loglevel：执行命令记录日志的等级；
+  - log_errors：监听错误日志，是一个 LogErrors 对象；
+  - binary该值：如果为 True ，则返回 Unicode 编码的 stdout 后 stderr ；
+  - prlimit：表示一个 ProcessLimits 对象，用于限制执行该 cmd 的命令的资源用量。
 - trycmd() 方法：execute() 的一个装饰器，使用这个装饰器可以更加容易的处理错误和异常。返回一个包含命令输出 strdout 或 stderr 字符串的元组。如果err不为空，则表示执行命令出现异常或错误。
 - ssh_execute()：通过 ssh 执行命令。
 - get_worker_count()：获取默认的 worker 数量，返回 CPU 的数量；如果无法确定则返回1.
