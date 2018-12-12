@@ -94,7 +94,7 @@ processutils 模块中定义了执行进程的方法等，主要方法包括以�
   - shell：表示是否使用 shell 执行这个命令；
   - loglevel：执行命令记录日志的等级；
   - log_errors：监听错误日志，是一个 LogErrors 对象；
-  - binary该值：如果为 True ，则返回 Unicode 编码的 stdout 后 stderr ；
+  - binary：该值如果为 True ，则返回 Unicode 编码的 stdout 后 stderr ；
   - prlimit：表示一个 ProcessLimits 对象，用于限制执行该 cmd 的命令的资源用量。
 - trycmd() 方法：execute() 的一个装饰器，使用这个装饰器可以更加容易的处理错误和异常。返回一个包含命令输出 strdout 或 stderr 字符串的元组。如果err不为空，则表示执行命令出现异常或错误。
 - ssh_execute()：通过 ssh 执行命令。
